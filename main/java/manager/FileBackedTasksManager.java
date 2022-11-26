@@ -1,6 +1,10 @@
 package manager;
 
+import tasks.Task;
+
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class FileBackedTasksManager extends InMemoryTaskManager {
     private File file;
@@ -34,7 +38,25 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
     }
 
     public void save() {
-        // try (BufferedReader writer =
+        try (FileWriter writer = new FileWriter(file, true)) {
+            writer.write(CSVTaskConverter.getHeader() + "/n");                   // try (BufferedReader writer =
+            for (Task task : tasks.values()) {
+                writer.write(CSVTaskConverter.toString(task) + "/n");
+            }
+            for (Task task : epics.values()) {
+                writer.write(CSVTaskConverter.toString(task) + "/n");
+            }
+            for (Task task : subTasks.values()) {
+                writer.write(CSVTaskConverter.toString(task) + "/n");
+            }
+            writer.write("/n");
+            writer.write(CSVTaskConverter.historyToString();
+
+
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         // writer.write(CVSTaskConverter.getHeader()
         // Пишем в файл перенос строки - writer.newLine()
         // Сериализация и запись тасков

@@ -3,6 +3,7 @@ package manager;
 import tasks.Task;
 import tasks.TaskType;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -17,16 +18,15 @@ public class CSVTaskConverter {
         String toString =
                 Integer.toString(task.getId())
                         + ","
-                        + TaskType.valueOf(task.getName().toUpperCase().substring(0,4))
+                        + TaskType.valueOf(task.getName().toUpperCase().substring(0, 4))
                         + ","
                         + task.getName()
                         + ","
                         + task.getStatus()
-                        +  ","
+                        + ","
                         + task.getSpecification()
                         + ","
-                        + task.getEpicId()
-                ;
+                        + task.getEpicId();
 
         return toString;
     }
@@ -36,7 +36,13 @@ public class CSVTaskConverter {
     }
 
     public static String historyToString(HistoryManager manager) {
-        return null;
+        List<Task> history = new ArrayList<>(manager.getHistory());
+        String historyToString = "";
+        for (Task task : history) {
+            historyToString = String.valueOf(task.getId()) + ",";
+        }
+
+        return historyToString;
     }
 
     public static List<Integer> historyFromString(String value) {
@@ -44,3 +50,4 @@ public class CSVTaskConverter {
     }
 
 }
+
